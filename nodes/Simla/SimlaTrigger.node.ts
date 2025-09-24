@@ -54,6 +54,11 @@ export class SimlaTrigger implements INodeType {
 						description: 'Trigger on customer message',
 					},
 					{
+						name: 'User Message',
+						value: 'user_message',
+						description: 'Trigger on user message',
+					},
+					{
 						name: 'Dialog Assign',
 						value: 'dialog_assigned',
 						description: 'Trigger on dialog assign',
