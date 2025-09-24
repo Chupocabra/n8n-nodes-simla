@@ -1,19 +1,25 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-simla",
   "version": "0.1.0",
-  "description": "",
+  "description": "Simla integration for n8n",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "simla",
+    "simla-node",
+    "simla-nodes"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/retailcrm/n8n-nodes-simla",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "RetailDriverLLC",
+    "email": "integration@retailcrm.ru"
   },
+  "contributors": [
+    "Alexander Komarichev komarichevalex@gmail.com"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/retailcrm/n8n-nodes-simla"
   },
   "engines": {
     "node": ">=20.15"
@@ -33,17 +39,17 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+      "dist/credentials/SimlaApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/Simla/SimlaTrigger.node.js",
+      "dist/nodes/Simla/Simla.node.js"
     ]
   },
   "devDependencies": {
+    "@types/node": "^24.3.1",
     "@typescript-eslint/parser": "~8.32.0",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
     "gulp": "^5.0.0",
     "prettier": "^3.5.3",
