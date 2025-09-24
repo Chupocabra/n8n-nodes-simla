@@ -1,0 +1,20 @@
+{
+	"node": "simla",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": [
+		"Sales"
+	],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.simla.com/Users/Integration/APIEditing"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.simla.com/Developers"
+			}
+		]
+	}
+}

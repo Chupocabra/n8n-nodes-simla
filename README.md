@@ -1,48 +1,99 @@
-![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
+# n8n-nodes-simla
 
-# n8n-nodes-starter
+This is a n8n community node. It lets you use Simla API in your n8n workflows.
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+Simla is a customer relationship management (CRM) platform that helps businesses manage sales, customer interactions, and messaging.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+[n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/reference/license/) workflow automation platform.
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+[Installation](#installation)  
+[Operations](#operations)  
+[Credentials](#credentials)  
+[Compatibility](#compatibility)  
+[Usage](#usage)
+[Resources](#resources)
 
-## Prerequisites
+## Installation
 
-You need the following installed on your development machine:
+Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes/installation/) in the n8n community nodes documentation.
 
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
+## Operations
 
-## Using this starter
+This node supports the following resources and operations:
 
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
+### Customer
+- **Get**: Get customers by filter
+- **Create**: Create customer
+- **Edit**: Edit customer
 
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
-   ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
-   ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+### Order
+- **Get**: Get orders by filter
+- **Create**: Create order
+- **Edit**: Edit order
 
-## More information
+### Message
+- **Send**: Send a message to chat
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
+### Dialog
+- **Assign**: Assign a dialog to a user or bot
+- **Unassign**: Unassign a dialog
+- **Close**: Close a dialog
 
-## License
+## Credentials
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+To use the Simla node, you need to authenticate with the Simla API:
+
+1. You need a Simla account
+2. Create a Simla API key - [documentation](https://docs.simla.com/Users/Integration/APIEditing). Minimal required permissions:
+	- **Orders**: Read and write
+	- **Customers**: Read and write
+	- **Integration**: Read and write
+3. Provide:
+	- **Simla URL**: Your Simla instance URL
+	- **Simla API key**: Your API key for authentication
+
+The node uses API key authentication with the key sent in the X-Api-Key header.
+
+## Compatibility
+
+This node has been tested with n8n version 1.109.1.
+
+## Usage
+
+### Customer and order operations:
+Fill in the necessary fields in the filter to search for a customer or order.
+
+#### Saving an order with a customer
+Select Simla Trigger with Trigger On: _Customer Message_.
+![img.png](docs/customerOrderCreate.png)
+You can search for a customer by _customerMgId_:
+![img.png](docs/customerGet.png)
+When creating an order, specify Customer -> ID:
+![img.png](docs/orderWithCustomer.png)
+
+Choose the necessary fields from fixedCollection for creating and editing a customer or order.
+#### Order creation example:
+![img.png](docs/orderCreate.png)
+
+#### Customer edition example:
+![img.png](docs/customerEdit.png)
+
+### Illustrative example of chat interactions:
+Select Simla Trigger with Trigger On: _Customer Message_.
+When a message is received in Simla, the message is passed to $json.body.payload[0].content. Depending on the message written by the client:
+- a greeting is sent to the client;
+- the dialog is assigned to the appropriate manager;
+- the dialog is unassigned from the responsible person;
+- the dialog is closed.
+
+![img.png](docs/chatManipulation.png)
+
+To send a message, specify the Chat ID from INPUT. To manage the dialog, select dialogId in the corresponding field.
+
+![img.png](docs/chatSendMessage.png)
+
+
+## Resources
+
+* [n8n community nodes documentation](https://docs.n8n.io/integrations/#community-nodes)
+* [Simla API Documentation](https://docs.simla.com/Developers/API/APIVersions/APIv5)
