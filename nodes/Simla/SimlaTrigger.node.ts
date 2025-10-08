@@ -70,6 +70,12 @@ export class SimlaTrigger implements INodeType {
 				],
 				required: true,
 			},
+			{
+				displayName: 'Execute workflow only if the dialog is assigned to the bot',
+				name: 'byAssign',
+				type: 'boolean',
+				default: true,
+			}
 		],
 	};
 
@@ -108,8 +114,9 @@ export class SimlaTrigger implements INodeType {
 				const id = this.getWorkflow().id;
 				const webhookUrl = this.getNodeWebhookUrl('default') as string;
 				const event = this.getNodeParameter('event') as string;
+				const byAssign = this.getNodeParameter('byAssign') as boolean;
 
-				const responseData = await simlaWebhookApi.createWebhook(this, name, id, webhookUrl, event);
+				const responseData = await simlaWebhookApi.createWebhook(this, name, id, webhookUrl, event, byAssign);
 				if (responseData?.id == undefined || responseData?.id == 0) {
 					delete webhookData.secret;
 					throw new NodeApiError(
