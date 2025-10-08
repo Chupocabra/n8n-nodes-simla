@@ -71,7 +71,7 @@ export class SimlaTrigger implements INodeType {
 				required: true,
 			},
 			{
-				displayName: 'Execute workflow only if the dialog is assigned to the bot',
+				displayName: 'Execute Workflow Only If The Dialog Is Assigned To The Bot',
 				name: 'byAssign',
 				type: 'boolean',
 				default: true,
