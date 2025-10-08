@@ -72,6 +72,7 @@ class SimlaWebhookApi {
 		id: string|undefined,
 		webhookUrl: string,
 		event: string,
+		byAssign: boolean,
 	): Promise<any> {
 		const credentials = await ref.getCredentials(this.credentialsName);
 
@@ -87,6 +88,7 @@ class SimlaWebhookApi {
 				n8nId: id,
 				webhookUrl,
 				event,
+				byAssign
 			},
 			json: true,
 		};
