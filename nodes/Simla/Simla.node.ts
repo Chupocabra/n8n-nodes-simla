@@ -2,7 +2,8 @@ import {
 	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
-	INodeTypeDescription, IRequestOptions,
+	INodeTypeDescription,
+	IHttpRequestOptions,
 	NodeConnectionType,
 } from 'n8n-workflow';
 import { simlaApiRequestBuilder, simlaWebhookApi } from './GenericFunctions';
@@ -95,7 +96,7 @@ export class Simla implements INodeType {
 				const baseUrl = useWhServiceUrl ? `${simlaWebhookApi.baseURL}/mg` : `${apiUrl}/api/v5`;
 				const url = `${baseUrl}${req.endpoint}`
 
-				const requestOptions: IRequestOptions = {
+				const requestOptions: IHttpRequestOptions = {
 					url,
 					method: req.method,
 					qs: req.qs ?? {},
@@ -103,15 +104,13 @@ export class Simla implements INodeType {
 				}
 
 				if (useWhServiceUrl) {
-					requestOptions.body = req.body ?? {};
 					requestOptions.headers = {
 						'X-Api-Url': apiUrl,
 					}
-				} else {
-					requestOptions.formData = req.body ?? {};
 				}
+				requestOptions.body = req.body ?? {};
 
-				const responseData = await this.helpers.requestWithAuthentication.call(this, 'simlaApi', requestOptions);
+				const responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'simlaApi', requestOptions);
 				const executionData = this.helpers.constructExecutionMetaData(
 					this.helpers.returnJsonArray(responseData),
 					{ itemData: { item: i } },
